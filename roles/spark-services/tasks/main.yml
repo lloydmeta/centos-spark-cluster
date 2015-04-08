@@ -1,0 +1,43 @@
+- name: Stop Spark-Worker service
+  debug: Stop Spark-Worker service
+  changed_when: true
+  notify: stop spark-worker
+  when: is_master
+  ignore_errors: yes
+  tags: spark-services
+
+- name: Start Spark-master service
+  debug: Start Spark-master service
+  changed_when: true
+  notify: start spark-master
+  when: is_master
+  tags: spark-services
+
+- name: Restart Spark-master service
+  debug: Restart Spark-master service
+  changed_when: true
+  notify: restart spark-master
+  when: is_master
+  tags: spark-services
+
+- name: Stop Spark-Master service
+  debug: Stop Spark-Master service
+  changed_when: true
+  notify: stop spark-master
+  when: not is_master
+  ignore_errors: yes
+  tags: spark-services
+
+- name: Start Spark-worker service
+  debug: Start Spark-worker service
+  changed_when: true
+  notify: start spark-worker
+  when: not is_master
+  tags: spark-services
+
+- name: Restart Spark-worker service
+  debug: Restart Spark-worker service
+  changed_when: true
+  notify: restart spark-worker
+  when: not is_master
+  tags: spark-services

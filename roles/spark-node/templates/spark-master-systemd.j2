@@ -1,0 +1,14 @@
+[Unit]
+Description=Spark Master node
+Before=
+After=network.target
+
+[Service]
+User=spark
+Environment=JAVA_HOME=/usr/local/java8 "SPARK_DAEMON_JAVA_OPTS=spark.deploy.recoveryMode=ZOOKEEPER spark.deploy.zookeeper.url={{ zk_hosts | join(":{0},".format(zk_client_port)) }}:{{ zk_client_port }}"
+WorkingDirectory={{ spark.working_dir }}
+ExecStart={{ spark_install_dir }}/spark-{{ spark.version }}-bin-hadoop2.4/sbin/start-master.sh --port {{ spark.master_work_port }} --webui-port {{ spark.master_ui_port }} --work-dir {{ spark.working_dir }}
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

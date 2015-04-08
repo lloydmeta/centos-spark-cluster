@@ -4,3 +4,11 @@ spark:
   working_dir: /var/lib/spark
   install_dir: /etc/spark
   mirror: http://ftp.meisei-u.ac.jp/mirror/apache/dist
+  # The following should all be set properly when not using Vagrant
+  master_work_port: "{{ vagrant_spark_master_work_port }}"
+  master_ui_port: "{{ vagrant_spark_master_ui_port }}"
+  worker_work_port: "{{ vagrant_spark_worker_work_port }}"
+  worker_ui_port: "{{ vagrant_spark_worker_ui_port }}"
+
+zk_hosts: "{{ vagrant_zk_cluster_hostnames }}" # pass an array of host names
+zk_client_port: "{{ vagrant_zk_client_port }}"

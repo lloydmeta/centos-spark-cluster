@@ -42,12 +42,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   zk_port = 2181
 
   # Spark master config
-  spark_master_memory_mb = 512
+  spark_master_memory_mb = 256
   spark_master_work_port = 7077
   spark_master_ui_port = 8080
 
   # Spark worker configs
-  spark_worker_memory_mb = 512
+  spark_worker_memory_mb = 1024
   spark_worker_work_port = 7178
   spark_worker_ui_port = 8181
 
@@ -70,7 +70,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   spark_cluster_masters = 2
 
-  spark_cluster_workers = 3
+  spark_cluster_workers = 2
 
   ## ------- These need to be set in group vars if using Ansible w/o Vagrant ------- >
 
@@ -157,7 +157,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
              vagrant_zk_cluster_info: zk_cluster_info,
              vagrant_zk_cluster_hostnames: zk_cluster.keys,
              vagrant_spark_master_hostnames: spark_master_cluster.keys,
-             vagrant_spark_master_work_port: spark_master_work_port
+             vagrant_spark_master_work_port: spark_master_work_port,
+             vagrant_spark_master_ui_port: spark_master_ui_port,
+             vagrant_spark_worker_work_port: spark_worker_work_port,
+             vagrant_spark_worker_ui_port: spark_worker_ui_port
            }
          end
        end

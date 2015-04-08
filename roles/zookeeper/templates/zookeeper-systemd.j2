@@ -7,7 +7,7 @@ After=network.target
 Type=forking
 User=zookeeper
 Environment=ZOO_LOG_DIR={{ zk.data_dir }}/log JAVA_HOME=/usr/local/java8
-CHDIR= {{ zk.data_dir }}
+WorkingDirectory={{ zk.data_dir }}
 ExecStart={{ zk_dir }}/bin/zkServer.sh start
 Restart=on-abort
 

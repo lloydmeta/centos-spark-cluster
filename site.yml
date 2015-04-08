@@ -9,3 +9,11 @@
 - hosts: spark
   roles:
     - spark-node
+
+- hosts: spark-masters
+  roles:
+    - { role: spark-services, is_master: True }
+
+- hosts: spark-workers
+  roles:
+    - { role: spark-services, is_master: False }

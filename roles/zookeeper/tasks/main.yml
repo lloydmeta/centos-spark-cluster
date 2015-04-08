@@ -92,6 +92,5 @@
     dest: /etc/systemd/system/zookeeper.service
     owner: root
     group: root
-    mode: 644
   notify: start zookeeper
   tags: zookeeper
