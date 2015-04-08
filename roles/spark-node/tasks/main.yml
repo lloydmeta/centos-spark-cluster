@@ -59,6 +59,14 @@
     group: spark
   tags: spark-node
 
+- name: Make log directory
+  file:
+    path: "{{ spark_install_dir }}/spark-{{ spark.version }}-bin-hadoop2.4/logs"
+    state: directory
+    owner: spark
+    group: spark
+  tags: spark-node
+
 - name: copy systemd start scripts
   template:
     src: "{{ item }}-systemd.j2"
