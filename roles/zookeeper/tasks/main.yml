@@ -38,21 +38,29 @@
   tags: zookeeper
 
 - name: check if tar has been downloaded
-  command: test -f /tmp/{{ zk_name }}.tar.gz
+  local_action: >
+    command test -f /tmp/{{ zk_name }}.tar.gz
   register: zookeeper_tar_downloaded
   failed_when: zookeeper_tar_downloaded.rc not in [0, 1]
   changed_when: False
+  run_once: true
+  sudo: false
   tags: zookeeper
 
 - name: Ensure Zookeeper tar is downloaded
-  get_url:
+  local_action:
+    module: get_url
     url: "{{ zk.mirror }}/zookeeper/{{ zk_name }}/{{ zk_name }}.tar.gz"
     dest: /tmp
   tags: zookeeper
+  run_once: true
+  sudo: false
   when: zookeeper_tar_downloaded.rc == 1
 
 - name: Ensure tar is extracted
-  command: tar xzf /tmp/{{ zk_name }}.tar.gz chdir="{{ zk.install_dir }}"
+  unarchive:
+    src: /tmp/{{ zk_name }}.tar.gz
+    dest: "{{ zk.install_dir }}"
   tags: zookeeper
 
 # Config and start Zookeeper

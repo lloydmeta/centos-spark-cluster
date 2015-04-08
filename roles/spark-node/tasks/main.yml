@@ -1,28 +1,25 @@
-- name: Set temp bin dir
-  set_fact:
-    spark_temp_bin_dir: "{{ spark.temp_dir }}/spark-{{ spark.version }}"
-  tags: spark-node
-
 - name: Set install dir
   set_fact:
-    spark_install_dir: "{{ spark.install_dir }}/spark-{{ spark.version }}"
+    spark_install_dir: "{{ spark.install_dir }}"
   tags: spark-node
 
-- name: Ensure local download directory exists
-  local_action:
-    module: file
-    path: "{{ spark_temp_bin_dir }}"
-    state: directory
-  sudo: false
+- name: check spark downloaded
+  local_action: >
+    command test -f {{ spark.temp_dir }}/spark-{{ spark.version }}-bin-hadoop2.4.tgz
+  register: spark_downloaded
+  failed_when: spark_downloaded.rc not in [0, 1]
+  changed_when: False
   run_once: true
+  sudo: false
   tags: spark-node
 
 - name: Download Spark locally
   local_action:
     module: get_url
     url: "{{ spark.mirror }}/spark/spark-{{ spark.version }}/spark-{{ spark.version }}-bin-hadoop2.4.tgz"
-    dest: "{{ spark_temp_bin_dir }}"
+    dest: "{{ spark.temp_dir }}"
   sudo: false
+  when: spark_downloaded.rc == 1
   run_once: true
   tags: spark-node
 
@@ -56,7 +53,7 @@
 
 - name: Unarchive to the install directory
   unarchive:
-    src: "{{ spark_temp_bin_dir }}/spark-{{ spark.version }}-bin-hadoop2.4.tgz"
+    src: "{{ spark.temp_dir }}/spark-{{ spark.version }}-bin-hadoop2.4.tgz"
     dest: "{{ spark_install_dir }}"
   tags: spark-node
 
