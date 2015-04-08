@@ -1,0 +1,6 @@
+spark:
+  temp_dir: /tmp
+  version: 1.3.0
+  working_dir: /var/lib/spark
+  install_dir: /etc/spark
+  mirror: http://ftp.meisei-u.ac.jp/mirror/apache/dist
