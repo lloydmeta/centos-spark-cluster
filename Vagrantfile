@@ -42,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   zk_port = 2181
 
   # Spark master config
-  spark_master_memory_mb = 256
+  spark_master_memory_mb = 1024
   spark_master_work_port = 7077
   spark_master_ui_port = 8080
 
@@ -50,9 +50,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   spark_worker_memory_mb = 1024
   spark_worker_work_port = 7178
   spark_worker_ui_port = 8181
-
-  kafka_vm_memory_mb = 512
-  kafka_port = 9092
 
   # < ------- These need to be set in group vars if using Ansible w/o Vagrant -------
 

@@ -1,5 +1,6 @@
 - hosts: all
   roles:
+    - normalise-networking
     - { role: java, when: accept_oracle_licence }
 
 - hosts: zk

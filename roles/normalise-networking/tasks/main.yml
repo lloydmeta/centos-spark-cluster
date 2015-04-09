@@ -1,0 +1,14 @@
+- name: disable firewalld
+  service: name=firewalld state=stopped enabled=no
+  ignore_errors: True  #when firewalld is stopped
+  tags: normalise-networking
+
+- name: remove own host from 127.0.0.1 aliases #otherwise things bind to a loopback interface
+  lineinfile: >
+    dest=/etc/hosts
+    state=present
+    regexp='^(127\.0\.0\.1.*){{ inventory_hostname }}(.*)$'
+    line='\1\2'
+    backup=yes
+    backrefs=yes
+  tags: normalise-networking
